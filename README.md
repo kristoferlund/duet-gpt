@@ -128,3 +128,19 @@ For the purposes of illustrating how interactions work, I chose a super simple t
 ## Known issues
 
 - When proposing changes to large files, the AI may return incomplete results. The gpt-4 context window is limited, DuetGPT works best with small files - one function per file is ideal.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+## Contact
+
+If you have any questions, please feel free to reach out to me!
+
+- [kristofer@fmckl.se](mailto:kristofer@fmckl.se)
+- Twitter: [@kristoferlund](https://twitter.com/kristoferlund)
+- Discord: kristofer#1475
+
+## License
+
+[MIT](LICENSE)
