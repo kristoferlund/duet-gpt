@@ -1,10 +1,16 @@
 # DuetGPT
 
 <p align="center">
-   <img alt="INtro video" src="media/intro-video.mp4" >
+   <img alt="Intro video" src="https://github.com/kristoferlund/duet-gpt/blob/main/media/intro-video.gif?raw=true" >
 <p>
 
-DuetGPT is a CLI tool that allows developers to more you to interact with AI in completing development tasks. The tool sends requests to the OpenAI to help you complete various development tasks based on bash commands and patch operations.
+Tired of copypasting code from ChatGPT? DuetGPT is an experimental AI powered CLI tool that helps developers perform tasks. The developer presents tasks to the AI, who then provides BashCommands, ReplaceCommands or follow-up Questions for clarification. The developer follows the commands given by the AI to perform the requested tasks.
+
+The AI is instructed with a semi-formal prompt before conversation starts. See the full prompt here: [`boot.prompt`](boot.prompt).
+
+DuetGPT builds on OpenAI's GPT-4 language model and uses its conversational capabilities to engage in a two-way conversation with the developer. It also builds on the excellent [langchain.js](https://github.com/hwchase17/langchainjs) toolkit of components to improve the quality of the conversation: [BufferMemory](https://js.langchain.com/docs/modules/memory/examples/buffer_memory), [ConversationChain](https://js.langchain.com/docs/api/chains/classes/ConversationChain)
+
+### ⚠️ DuetGPT has no guardrails! Make sure you understand the commands given by the AI before executing them. ⚠️
 
 ## Setup
 
@@ -60,15 +66,7 @@ npm start
 
 ## Usage
 
-As you interact with DuetGPT, it will suggest appropriate bash or patch commands based on your requests. To proceed, you'll be asked whether to run the command or not. Respond to AI questions and follow its instructions to complete your tasks.
-
-## Features
-                                                                                                                            
-- 🤖 Interactive AI assistance: Get quick help and suggestions for development tasks.                                  
-- 🎯 Accurate commands: Receive precise bash and patch commands tailored to your needs.                                
-- 💬 Two-way communication: Engage in an easy-to-understand and effective conversation with the AI.                    
-- 📁 File management: Get help creating, modifying, and organizing project files.                                      
-- 🌐 OpenAI powered: Harness the power of OpenAI's advanced language model for superior assistance.                    
+As you interact with DuetGPT, it will suggest appropriate bash or patch commands based on your requests. To proceed, you'll be asked whether to run the command or not. Respond to AI questions and follow its instructions to complete your tasks.                    
                                                                                                                       
 ## `boot.prompt`
 
