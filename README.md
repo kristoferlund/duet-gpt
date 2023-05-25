@@ -6,20 +6,51 @@ DuetGPT is a CLI tool that allows developers to more you to interact with AI in 
 
 ## Setup
 
+Install the DuetGPT CLI tool globally using npm:
+
+```bash
+npm install -g kristoferlund/duetgpt
+```
+
+## Usage
+
+To start DuetGPT, run the following command:
+
+```bash
+duet-gpt
+```
+
+You will be prompted to enter your OpenAI API key. You can find your API key on the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
+
+```bash
+     _            _              _   
+    | |          | |            | |  
+  __| |_   _  ___| |_ __ _ _ __ | |_ 
+ / _` | | | |/ _ \ __/ _` | '_ \| __|
+| (_| | |_| |  __/ || (_| | |_) | |_ 
+ \__,_|\__,_|\___|\__\__, | .__/ \__|
+                      __/ | |        
+                     |___/|_|        
+  
+┌  DuetGPT
+│
+◆  Please enter your OpenAI API key:
+│  sk-XXX…
+└
+```
+
+## Setup for development
+
 1. Clone the repository.
+
+
 2. Install dependencies:
 
 ```bash
 yarn
 ```
 
-3. Set up a `.env` file with your OpenAI API key:
-
-```
-OPEN_AI_KEY=your_openai_key
-```
-
-4. Run DuetGPT using yarn:
+3. Run DuetGPT using yarn:
 
 ```bash
 yarn start
@@ -48,7 +79,6 @@ The developer presents tasks to the AI, who then provides ResponseMessages that 
 For the purposes of illustrating how interactions work, I chose a super simple task. Let's say you want to add `.yarn/cache` to `.gitignore`. Here is how to ask DuetGPT to help you with that:
 
 ```
-
      _            _              _   
     | |          | |            | |  
   __| |_   _  ___| |_ __ _ _ __ | |_ 
@@ -57,8 +87,8 @@ For the purposes of illustrating how interactions work, I chose a super simple t
  \__,_|\__,_|\___|\__\__, | .__/ \__|
                       __/ | |        
                      |___/|_|        
-  
-┌  DuetGPT v0.0.2
+                       
+┌  DuetGPT
 │
 ◇  LLM and memory started
 │
