@@ -6,8 +6,10 @@ import * as fs from "fs";
 import pc from "picocolors";
 import path from "path";
 import os from "os";
+import packageJson from "../package.json";
 
 const configPath = path.join(os.homedir(), ".duet-gpt");
+const promptPath = path.join(__dirname, "../boot.prompt");
 
 async function getApiKey() {
   if (process.env.OPEN_AI_KEY) {
@@ -45,10 +47,7 @@ export async function boot() {
   `)
   );
 
-  const packageData = JSON.parse(fs.readFileSync("./package.json", "utf8"));
-  const version = packageData.version;
-
-  p.intro(`DuetGPT v${version}`);
+  p.intro(`DuetGPT v${packageJson.version}`);
 
   // Get the OpenAI API key from config or prompt the user for it
   const openAIApiKey = await getApiKey();
@@ -72,7 +71,7 @@ export async function boot() {
   // Read the boot sequence from the boot.prompt file and send it to the AI
   try {
     const bootResponse = await chain.call({
-      input: fs.readFileSync("./boot.prompt", "utf8"),
+      input: fs.readFileSync(promptPath, "utf8"),
     });
 
     // Boot sequence is done, so stop the spinner
