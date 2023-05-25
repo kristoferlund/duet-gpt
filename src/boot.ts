@@ -4,9 +4,13 @@ import { OpenAI } from "langchain/llms/openai";
 import * as p from "@clack/prompts";
 import * as fs from "fs";
 import pc from "picocolors";
-import path from "path";
+import path, { dirname } from "path";
 import os from "os";
 import packageJson from "../package.json";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const configPath = path.join(os.homedir(), ".duet-gpt");
 const promptPath = path.join(__dirname, "../boot.prompt");

@@ -1,6 +1,6 @@
 {
   "name": "duet-gpt",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Experimental AI developer assistant CLI. Developers gives the AI tasks, AI responds with commands that the CLI performs.",
   "repository": {
     "type": "git",
