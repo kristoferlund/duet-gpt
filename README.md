@@ -47,13 +47,13 @@ You will be prompted to enter your OpenAI API key. You can find your API key on 
 2. Install dependencies:
 
 ```bash
-yarn
+npm install
 ```
 
 3. Run DuetGPT using yarn:
 
 ```bash
-yarn start
+npm start
 ```
 
 ## Usage
