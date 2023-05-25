@@ -9,7 +9,7 @@ DuetGPT is a CLI tool that allows developers to more you to interact with AI in 
 Install the DuetGPT CLI tool globally using npm:
 
 ```bash
-npm install -g kristoferlund/duetgpt
+npm install -g duet-gpt
 ```
 
 ## Usage
@@ -87,7 +87,7 @@ For the purposes of illustrating how interactions work, I chose a super simple t
  \__,_|\__,_|\___|\__\__, | .__/ \__|
                       __/ | |        
                      |___/|_|        
-                       
+
 ┌  DuetGPT
 │
 ◇  LLM and memory started
