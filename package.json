@@ -22,9 +22,7 @@
   "files": [
     "dist"
   ],
-  "bin": {
-    "duet-gpt": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "scripts": {
     "build": "pkgroll",
     "start": "jiti ./src/index.ts",
