@@ -1,10 +1,23 @@
 {
-  "name": "duetgpt",
+  "name": "duet-gpt",
   "version": "0.0.2",
-  "description": "PLACEHOLDER_DESCRIPTION",
-  "repository": "PLACEHOLDER_REPOSITORY",
-  "bugs": "PLACEHOLDER_BUGS",
-  "homepage": "PLACEHOLDER_HOMEPAGE",
+  "description": "Experimental AI developer assistant CLI. Developers gives the AI tasks, AI responds with commands that the CLI performs.",
+  "repository": "https://github.com/kristoferlund/duet-gpt",
+  "bugs": "https://github.com/kristoferlund/duet-gpt/issues",
+  "homepage": "https://github.com/kristoferlund/duet-gpt",
+  "author": "Kristofer Lund <kristofer@fmckl.se>",
+  "keywords": [
+    "ai",
+    "cli",
+    "assistant",
+    "agent",
+    "gpt",
+    "gpt-4",
+    "llm",
+    "openai",
+    "duet-gpt"
+  ],
+  "license": "MIT",
   "type": "module",
   "files": [
     "dist"
@@ -17,9 +30,6 @@
     "start": "jiti ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "PLACEHOLDER_AUTHOR",
-  "license": "PLACEHOLDER_LICENSE",
   "dependencies": {
     "@clack/prompts": "^0.6.3",
     "@types/diff": "^5.0.3",
