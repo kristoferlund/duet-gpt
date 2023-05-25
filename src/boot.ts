@@ -1,7 +1,6 @@
 import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { OpenAI } from "langchain/llms/openai";
-import * as dotenv from "dotenv";
 import * as p from "@clack/prompts";
 import * as fs from "graceful-fs";
 import pc from "picocolors";
@@ -81,7 +80,7 @@ export async function boot() {
 
     return { bootResponse, chain };
   } catch (e) {
-    p.cancel(e.message);
+    p.cancel((e as Error).message);
     process.exit(0);
   }
 }
