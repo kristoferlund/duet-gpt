@@ -1,5 +1,8 @@
 # Contributing to DuetGPT!
 
+![DuetGPT Logo](media/duetgpt.png)
+
+
 Kid: 🎵Hey Robot, let's talk about how we contribute!🎵
 
 Robot: 🎵Indeed, young one. First, please fork and clone the repository before you start making changes.🎵

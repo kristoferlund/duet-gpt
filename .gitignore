@@ -13,3 +13,5 @@ dist/
 CACHE
 .cache
 .cache-loader
+
+.DS_Store

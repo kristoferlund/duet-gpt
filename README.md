@@ -1,6 +1,8 @@
 # DuetGPT
 
-![DuetGPT Logo](media/duetgpt.png)
+<p align="center">
+   <img alt="INtro video" src="media/intro-video.mp4" >
+<p>
 
 DuetGPT is a CLI tool that allows developers to more you to interact with AI in completing development tasks. The tool sends requests to the OpenAI to help you complete various development tasks based on bash commands and patch operations.
 
