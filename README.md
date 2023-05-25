@@ -4,6 +4,8 @@
    <img alt="Intro video" src="https://github.com/kristoferlund/duet-gpt/blob/main/media/intro-video.gif?raw=true" >
 <p>
 
+**👆 Example: Creating a node.js app that draws a sine wave using DuetGPT**
+
 Tired of copypasting code from ChatGPT? DuetGPT is an experimental AI powered CLI tool that helps developers perform tasks. The developer presents tasks to the AI, who then provides BashCommands, ReplaceCommands or follow-up Questions for clarification. The developer follows the commands given by the AI to perform the requested tasks.
 
 The AI is instructed with a semi-formal prompt before conversation starts. See the full prompt here: [`boot.prompt`](boot.prompt).
