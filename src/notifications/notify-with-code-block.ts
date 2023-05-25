@@ -1,4 +1,4 @@
-import * as fs from "graceful-fs";
+import * as fs from "fs";
 import * as diff from "diff";
 import { NotifyOptions } from "./types/notify-options.type";
 import { notify } from "./notify";

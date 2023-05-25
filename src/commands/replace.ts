@@ -1,4 +1,4 @@
-import * as fs from "graceful-fs";
+import * as fs from "fs";
 
 /**
  * Handle the REPLACE command. This command will write the command contents to the

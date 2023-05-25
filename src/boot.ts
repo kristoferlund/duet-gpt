@@ -2,7 +2,7 @@ import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { OpenAI } from "langchain/llms/openai";
 import * as p from "@clack/prompts";
-import * as fs from "graceful-fs";
+import * as fs from "fs";
 import pc from "picocolors";
 import path from "path";
 import os from "os";
