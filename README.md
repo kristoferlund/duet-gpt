@@ -31,11 +31,11 @@ As you interact with DuetGPT, it will suggest appropriate bash or patch commands
 
 ## Features
                                                                                                                             
-• 🤖 Interactive AI assistance: Get quick help and suggestions for development tasks.                                  
-• 🎯 Accurate commands: Receive precise bash and patch commands tailored to your needs.                                
-• 💬 Two-way communication: Engage in an easy-to-understand and effective conversation with the AI.                    
-• 📁 File management: Get help creating, modifying, and organizing project files.                                      
-• 🌐 OpenAI powered: Harness the power of OpenAI's advanced language model for superior assistance.                    
+- 🤖 Interactive AI assistance: Get quick help and suggestions for development tasks.                                  
+- 🎯 Accurate commands: Receive precise bash and patch commands tailored to your needs.                                
+- 💬 Two-way communication: Engage in an easy-to-understand and effective conversation with the AI.                    
+- 📁 File management: Get help creating, modifying, and organizing project files.                                      
+- 🌐 OpenAI powered: Harness the power of OpenAI's advanced language model for superior assistance.                    
                                                                                                                       
 ## `boot.prompt`
 
@@ -45,3 +45,4 @@ The developer presents tasks to the AI, who then provides ResponseMessages that 
 
 ## Known issues
 
+- When proposing changes to large files, the AI may return incomplete results. The gpt-4 context window is limited, DuetGPT works best with small files - one function per file is ideal.
