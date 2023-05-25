@@ -1,6 +1,6 @@
 {
   "name": "duet-gpt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Experimental AI developer assistant CLI. Developers gives the AI tasks, AI responds with commands that the CLI performs.",
   "repository": "https://github.com/kristoferlund/duet-gpt",
   "bugs": "https://github.com/kristoferlund/duet-gpt/issues",
@@ -22,7 +22,9 @@
   "files": [
     "dist"
   ],
-  "bin": "./dist/index.js",
+  "bin": {
+    "duet-gpt": "./dist/index.js"
+  },
   "scripts": {
     "build": "pkgroll",
     "start": "jiti ./src/index.ts",
