@@ -1,6 +1,6 @@
 {
   "name": "duet-gpt",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Experimental AI developer assistant CLI. Developers gives the AI tasks, AI responds with commands that the CLI performs.",
   "repository": {
     "type": "git",
@@ -36,12 +36,11 @@
   "dependencies": {
     "@clack/prompts": "^0.6.3",
     "@types/diff": "^5.0.3",
-    "@types/graceful-fs": "^4.1.6",
+    "@types/node": "^20.2.3",
     "boxen": "^7.1.0",
     "cli-markdown": "^3.0.3",
     "diff": "^5.1.0",
     "execa": "^7.1.1",
-    "graceful-fs": "^4.2.11",
     "langchain": "^0.0.81",
     "picocolors": "^1.0.0"
   },
