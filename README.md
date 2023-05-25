@@ -43,6 +43,88 @@ The [`boot.prompt`](boot.prompt) file contains the instructions that govern the 
 
 The developer presents tasks to the AI, who then provides ResponseMessages that include either a BashCommand, a PatchCommand or a follow-up Question for clarification. The developer follows the commands given by the AI to perform the requested tasks.
 
+## Sample interaction
+
+For the purposes of illustrating how interactions work, I chose a super simple task. Let's say you want to add `.yarn/cache` to `.gitignore`. Here is how to ask DuetGPT to help you with that:
+
+```
+
+     _            _              _   
+    | |          | |            | |  
+  __| |_   _  ___| |_ __ _ _ __ | |_ 
+ / _` | | | |/ _ \ __/ _` | '_ \| __|
+| (_| | |_| |  __/ || (_| | |_) | |_ 
+ \__,_|\__,_|\___|\__\__, | .__/ \__|
+                      __/ | |        
+                     |___/|_|        
+  
+┌  DuetGPT v0.0.2
+│
+◇  LLM and memory started
+│
+┌ 🤖 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                                                            │
+│                                                                                                                            │
+│    My mission is to collaborate with you as a developer by providing specific bash or file modification commands to help   │
+│    you complete your development-related tasks, while effectively engaging in two-way interactions.                        │
+│                                                                                                                            │
+│                                                                                                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+│
+◇  What would you like to do?
+│  Add .yarn/cache to .gitignore
+│
+◇  AI response received
+│
+┌ 🤖 ────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│                                                                            │
+│    First, I need to check if .gitignore exists in the current directory.   │
+│                                                                            │
+│     § BASH                                                                 │
+│                                                                            │
+│     1 ls .gitignore                                                        │
+│                                                                            │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+│
+◇  What would you like to do?
+│  Run command
+│
+┌ 💻 ────────────┐
+│                │
+│   .gitignore   │
+│                │
+└────────────────┘
+│
+◇  AI response received
+│
+┌ 🤖 ────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│                                                                        │
+│    I will now append '.yarn/cache' to your existing .gitignore file.   │
+│                                                                        │
+│     § BASH                                                             │
+│                                                                        │
+│     1 echo ".yarn/cache" >> .gitignore                                 │
+│                                                                        │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+│
+◇  What would you like to do?
+│  Run command
+│
+┌ 💻 ────┐
+│        │
+│   OK   │
+│        │
+└────────┘
+│
+◆  What would you like to do?
+│  Not sure
+└
+
+```
 ## Known issues
 
 - When proposing changes to large files, the AI may return incomplete results. The gpt-4 context window is limited, DuetGPT works best with small files - one function per file is ideal.
