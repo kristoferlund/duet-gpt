@@ -39,6 +39,14 @@ async function getApiKey() {
 
 export async function boot() {
   console.log(
+    pc.bold(
+      pc.yellow(
+        "⚠️ DuetGPT has no guardrails! Make sure you understand the commands given by the AI before executing them. ⚠️"
+      )
+    )
+  );
+
+  console.log(
     pc.cyan(`
      _            _              _   
     | |          | |            | |  
