@@ -5,12 +5,33 @@ import * as dotenv from "dotenv";
 import * as p from "@clack/prompts";
 import * as fs from "graceful-fs";
 import pc from "picocolors";
+import path from "path";
+import os from "os";
 
-/**
- * Boot the LLM and memory. This will read the .env file, create a new LLM instance,
- * create a new memory instance, create a new conversation chain instance, read the
- * boot sequence from the boot.prompt file and send it to the AI.
- */
+const configPath = path.join(os.homedir(), ".duet-gpt");
+
+async function getApiKey() {
+  if (process.env.OPEN_AI_KEY) {
+    return process.env.OPEN_AI_KEY;
+  }
+
+  if (fs.existsSync(configPath)) {
+    const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+    return config.OPEN_AI_KEY;
+  } else {
+    const apiKey = await p.text({
+      message: "Please enter your OpenAI API key: ",
+      placeholder: "sk-XXX…",
+    });
+    if (p.isCancel(apiKey) || !apiKey) {
+      p.cancel("OpenAI API key is required to run DuetGPT");
+      process.exit(0);
+    }
+    fs.writeFileSync(configPath, JSON.stringify({ OPEN_AI_KEY: apiKey }));
+    return apiKey;
+  }
+}
+
 export async function boot() {
   console.log(
     pc.cyan(`
@@ -25,21 +46,21 @@ export async function boot() {
   `)
   );
 
-  const packageData = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  const packageData = JSON.parse(fs.readFileSync("./package.json", "utf8"));
   const version = packageData.version;
 
   p.intro(`DuetGPT v${version}`);
+
+  // Get the OpenAI API key from config or prompt the user for it
+  const openAIApiKey = await getApiKey();
 
   // Show a spinner while booting
   const s = p.spinner();
   s.start("Starting LLM and memory");
 
-  // Read ENV variables from .env file
-  dotenv.config();
-
   // Create a new OpenAI LLM instance
   const model = new OpenAI({
-    openAIApiKey: process.env.OPEN_AI_KEY,
+    openAIApiKey: openAIApiKey,
     modelName: "gpt-4",
   });
 
@@ -50,12 +71,17 @@ export async function boot() {
   const chain = new ConversationChain({ llm: model, memory: memory });
 
   // Read the boot sequence from the boot.prompt file and send it to the AI
-  const bootResponse = await chain.call({
-    input: fs.readFileSync("./boot.prompt", "utf8"),
-  });
+  try {
+    const bootResponse = await chain.call({
+      input: fs.readFileSync("./boot.prompt", "utf8"),
+    });
 
-  // Boot sequence is done, so stop the spinner
-  s.stop("LLM and memory started");
+    // Boot sequence is done, so stop the spinner
+    s.stop("LLM and memory started");
 
-  return { bootResponse, chain };
+    return { bootResponse, chain };
+  } catch (e) {
+    p.cancel(e.message);
+    process.exit(0);
+  }
 }
