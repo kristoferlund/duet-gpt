@@ -1,0 +1,40 @@
+{
+  "name": "duetgpt",
+  "version": "0.0.2",
+  "description": "PLACEHOLDER_DESCRIPTION",
+  "repository": "PLACEHOLDER_REPOSITORY",
+  "bugs": "PLACEHOLDER_BUGS",
+  "homepage": "PLACEHOLDER_HOMEPAGE",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "duetgpt": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "pkgroll",
+    "start": "jiti ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "PLACEHOLDER_AUTHOR",
+  "license": "PLACEHOLDER_LICENSE",
+  "dependencies": {
+    "@clack/prompts": "^0.6.3",
+    "@types/diff": "^5.0.3",
+    "@types/graceful-fs": "^4.1.6",
+    "boxen": "^7.1.0",
+    "cli-markdown": "^3.0.3",
+    "diff": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "execa": "^7.1.1",
+    "graceful-fs": "^4.2.11",
+    "langchain": "^0.0.81",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "pkgroll": "^1.10.0",
+    "typescript": "^5.0.4"
+  }
+}

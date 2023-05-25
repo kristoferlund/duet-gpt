@@ -1,0 +1,15 @@
+# Node.js rules
+node_modules/
+dist/
+
+# Build files
+*.log
+*.tgz
+
+# Environment files
+.env
+
+# Cache
+CACHE
+.cache
+.cache-loader
