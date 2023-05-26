@@ -1,6 +1,6 @@
 # Contributing to DuetGPT!
 
-![DuetGPT Logo](media/duetgpt.png)
+![DuetGPT](media/robot-and-kid.jpg)
 
 
 Kid: 🎵Hey Robot, let's talk about how we contribute!🎵
