@@ -1,13 +1,16 @@
+import * as fs from "fs";
+import * as p from "@clack/prompts";
+
+import path, { dirname } from "path";
+
 import { BufferMemory } from "langchain/memory";
 import { ConversationChain } from "langchain/chains";
 import { OpenAI } from "langchain/llms/openai";
-import * as p from "@clack/prompts";
-import * as fs from "fs";
-import pc from "picocolors";
-import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import { getErrorMessage } from "./utils/error";
 import os from "os";
 import packageJson from "../package.json";
-import { fileURLToPath } from "url";
+import pc from "picocolors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -71,7 +74,7 @@ export async function boot() {
   // Create a new OpenAI LLM instance
   const model = new OpenAI({
     openAIApiKey: openAIApiKey,
-    modelName: "gpt-4",
+    modelName: "gpt-4-0613",
   });
 
   // Create a new memory instance
@@ -91,7 +94,7 @@ export async function boot() {
 
     return { bootResponse, chain };
   } catch (e) {
-    p.cancel((e as Error).message);
+    p.cancel(getErrorMessage(e));
     process.exit(0);
   }
 }
