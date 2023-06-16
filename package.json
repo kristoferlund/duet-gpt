@@ -44,7 +44,7 @@
     "cli-markdown": "^3.0.3",
     "diff": "^5.1.0",
     "execa": "^7.1.1",
-    "langchain": "^0.0.81",
+    "langchain": "^0.0.95",
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
