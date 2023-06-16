@@ -39,6 +39,7 @@
     "@clack/prompts": "^0.6.3",
     "@types/diff": "^5.0.3",
     "@types/node": "^20.2.3",
+    "axios": "^1.4.0",
     "boxen": "^7.1.0",
     "cli-markdown": "^3.0.3",
     "diff": "^5.1.0",
