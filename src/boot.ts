@@ -1,9 +1,16 @@
 import * as fs from "fs";
 import * as p from "@clack/prompts";
 
+import {
+  ChatPromptTemplate,
+  HumanMessagePromptTemplate,
+  MessagesPlaceholder,
+  SystemMessagePromptTemplate,
+} from "langchain/prompts";
 import path, { dirname } from "path";
 
 import { BufferMemory } from "langchain/memory";
+import { ChatOpenAI } from "langchain/chat_models/openai";
 import { ConversationChain } from "langchain/chains";
 import { OpenAI } from "langchain/llms/openai";
 import { fileURLToPath } from "url";
@@ -72,21 +79,31 @@ export async function boot() {
   s.start("Starting LLM and memory");
 
   // Create a new OpenAI LLM instance
-  const model = new OpenAI({
+  const model = new ChatOpenAI({
     openAIApiKey: openAIApiKey,
     modelName: "gpt-4-0613",
+    temperature: 0,
   });
-
-  // Create a new memory instance
-  const memory = new BufferMemory();
-
-  // Create a new conversation chain instance
-  const chain = new ConversationChain({ llm: model, memory: memory });
 
   // Read the boot sequence from the boot.prompt file and send it to the AI
   try {
+    const systemPromptText = fs.readFileSync(promptPath, "utf8");
+    const chatPrompt = ChatPromptTemplate.fromPromptMessages([
+      SystemMessagePromptTemplate.fromTemplate(systemPromptText),
+      new MessagesPlaceholder("history"),
+      HumanMessagePromptTemplate.fromTemplate("{input}"),
+    ]);
+
+    // Create a new conversation chain instance
+    const chain = new ConversationChain({
+      memory: new BufferMemory({ returnMessages: true, memoryKey: "history" }),
+      prompt: chatPrompt,
+      llm: model,
+    });
+
     const bootResponse = await chain.call({
-      input: fs.readFileSync(promptPath, "utf8"),
+      input:
+        "Confirm by responding with a one sentence summary of the mission you have been assigned.",
     });
 
     // Boot sequence is done, so stop the spinner
