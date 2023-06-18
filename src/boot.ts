@@ -1,43 +1,25 @@
-import { BufferMemory } from "langchain/memory";
-import { ConversationChain } from "langchain/chains";
-import { OpenAI } from "langchain/llms/openai";
-import * as p from "@clack/prompts";
 import * as fs from "fs";
-import pc from "picocolors";
-import path, { dirname } from "path";
-import os from "os";
-import packageJson from "../package.json";
-import { fileURLToPath } from "url";
+import * as p from "@clack/prompts";
 
+import path, { dirname } from "path";
+
+import { BashAiFunction } from "./functions/bash";
+import { CreateChatCompletionResponse } from "openai";
+import { DuetGpt } from "./duetgpt";
+import { ReplaceAiFunction } from "./functions/replace";
+import { fileURLToPath } from "url";
+import { getApiKey } from "./utils/api";
+import { getErrorMessage } from "./utils/error";
+import packageJson from "../package.json";
+import pc from "picocolors";
+
+// Define file and directory names
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const systemPromptPath = path.join(__dirname, "../system.prompt");
 
-const configPath = path.join(os.homedir(), ".duet-gpt");
-const promptPath = path.join(__dirname, "../boot.prompt");
-
-async function getApiKey() {
-  if (process.env.OPEN_AI_KEY) {
-    return process.env.OPEN_AI_KEY;
-  }
-
-  if (fs.existsSync(configPath)) {
-    const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-    return config.OPEN_AI_KEY;
-  } else {
-    const apiKey = await p.text({
-      message: "Please enter your OpenAI API key: ",
-      placeholder: "sk-XXX…",
-    });
-    if (p.isCancel(apiKey) || !apiKey) {
-      p.cancel("OpenAI API key is required to run DuetGPT");
-      process.exit(0);
-    }
-    fs.writeFileSync(configPath, JSON.stringify({ OPEN_AI_KEY: apiKey }));
-    return apiKey;
-  }
-}
-
-export async function boot() {
+function welcomeMessages() {
+  // Print warning message
   console.log(
     pc.bold(
       pc.yellow(
@@ -46,6 +28,7 @@ export async function boot() {
     )
   );
 
+  // Print intro message
   console.log(
     pc.cyan(`
      _            _              _   
@@ -60,38 +43,45 @@ export async function boot() {
   );
 
   p.intro(`DuetGPT v${packageJson.version}`);
+}
+
+type BootResponse = {
+  bootResponse: CreateChatCompletionResponse;
+  duetGpt: DuetGpt;
+};
+
+// Main boot function
+export async function boot() {
+  // Print welcome messages
+  welcomeMessages();
 
   // Get the OpenAI API key from config or prompt the user for it
   const openAIApiKey = await getApiKey();
 
   // Show a spinner while booting
   const s = p.spinner();
-  s.start("Starting LLM and memory");
-
-  // Create a new OpenAI LLM instance
-  const model = new OpenAI({
-    openAIApiKey: openAIApiKey,
-    modelName: "gpt-4",
-  });
-
-  // Create a new memory instance
-  const memory = new BufferMemory();
-
-  // Create a new conversation chain instance
-  const chain = new ConversationChain({ llm: model, memory: memory });
+  s.start("Starting DuetGPT");
 
   // Read the boot sequence from the boot.prompt file and send it to the AI
   try {
-    const bootResponse = await chain.call({
-      input: fs.readFileSync(promptPath, "utf8"),
-    });
+    const systemPromptText = fs.readFileSync(systemPromptPath, "utf8");
+
+    // Create a new DuetGPT instance
+    const duetGpt = new DuetGpt(openAIApiKey, systemPromptText);
+    duetGpt.addFunction(new BashAiFunction());
+    duetGpt.addFunction(new ReplaceAiFunction());
+
+    const bootResponse = await duetGpt.userRequest(
+      "Confirm by responding with a one sentence summary of the mission you have been assigned."
+    );
 
     // Boot sequence is done, so stop the spinner
-    s.stop("LLM and memory started");
+    s.stop("DuetGPT started");
 
-    return { bootResponse, chain };
+    return { bootResponse, duetGpt };
   } catch (e) {
-    p.cancel((e as Error).message);
+    // Handle any errors during boot sequence
+    p.cancel(getErrorMessage(e));
     process.exit(0);
   }
 }

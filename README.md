@@ -1,18 +1,26 @@
 # DuetGPT
 
+**🎉 News:** DuetGPT no longer uses langchain but instead [OpenAI functions](https://openai.com/blog/function-calling-and-other-api-updates). This means a significant improvement in reliability and performance.
+
+DuetGPT is an experimental AI powered CLI tool and semi-autonomous agent that helps developers with coding tasks and file system tasks. The developer describes tasks to the AI who then issues commands or follow-up questions for clarification. After approval by the developer, **DuetGPT automatically executes the commands issued by the AI.**
+
+DuetGPT also does really well as a general bash helper
+
+Example tasks:
+
+- "Refactor index.js: add inline comments, improve variable names"
+- "Write a bash script that lists all cars in the database"
+- "Find all files in current directory and subdirectories that contain the word "DuetGPT"
+
+DuetGPT builds on OpenAI's GPT-4 language model and uses its conversational capabilities to engage in a two-way conversation with the developer. It uses the newly released feature of the OpenAI API that allows the AI to make [function calls](https://openai.com/blog/function-calling-and-other-api-updates).
+
+### ⚠️ DuetGPT has no guardrails! Make sure you understand the commands given by the AI before executing them. ⚠️
+
 <p align="center">
    <img alt="Intro video" src="https://github.com/kristoferlund/duet-gpt/blob/main/media/intro-video.gif?raw=true" >
 <p>
 
 **👆 Example: Creating a node.js app that draws a sine wave using DuetGPT**
-
-Tired of copypasting code from ChatGPT? DuetGPT is an experimental AI powered CLI tool that helps developers perform tasks. The developer presents tasks to the AI, who then provides BashCommands, ReplaceCommands or follow-up Questions for clarification. The developer follows the commands given by the AI to perform the requested tasks.
-
-The AI is instructed with a semi-formal prompt before conversation starts. See the full prompt here: [`boot.prompt`](boot.prompt).
-
-DuetGPT builds on OpenAI's GPT-4 language model and uses its conversational capabilities to engage in a two-way conversation with the developer. It also builds on the excellent [langchain.js](https://github.com/hwchase17/langchainjs) toolkit of components to improve the quality of the conversation: [BufferMemory](https://js.langchain.com/docs/modules/memory/examples/buffer_memory), [ConversationChain](https://js.langchain.com/docs/api/chains/classes/ConversationChain)
-
-### ⚠️ DuetGPT has no guardrails! Make sure you understand the commands given by the AI before executing them. ⚠️
 
 ## Setup
 
@@ -33,15 +41,15 @@ duet-gpt
 You will be prompted to enter your OpenAI API key. You can find your API key on the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 
 ```bash
-     _            _              _   
-    | |          | |            | |  
-  __| |_   _  ___| |_ __ _ _ __ | |_ 
+     _            _              _
+    | |          | |            | |
+  __| |_   _  ___| |_ __ _ _ __ | |_
  / _` | | | |/ _ \ __/ _` | '_ \| __|
-| (_| | |_| |  __/ || (_| | |_) | |_ 
+| (_| | |_| |  __/ || (_| | |_) | |_
  \__,_|\__,_|\___|\__\__, | .__/ \__|
-                      __/ | |        
-                     |___/|_|        
-  
+                      __/ | |
+                     |___/|_|
+
 ┌  DuetGPT
 │
 ◆  Please enter your OpenAI API key:
@@ -52,7 +60,6 @@ You will be prompted to enter your OpenAI API key. You can find your API key on 
 ## Setup for development
 
 1. Clone the repository.
-
 
 2. Install dependencies:
 
@@ -66,29 +73,19 @@ npm install
 npm start
 ```
 
-## Usage
-
-As you interact with DuetGPT, it will suggest appropriate bash or patch commands based on your requests. To proceed, you'll be asked whether to run the command or not. Respond to AI questions and follow its instructions to complete your tasks.                    
-                                                                                                                      
-## `boot.prompt`
-
-The [`boot.prompt`](boot.prompt) file contains the instructions that govern the interaction between the AI and the developer. It sets the ground rules for how the conversation is conducted and what each party is expected to do.
-
-The developer presents tasks to the AI, who then provides ResponseMessages that include either a BashCommand, a PatchCommand or a follow-up Question for clarification. The developer follows the commands given by the AI to perform the requested tasks.
-
 ## Sample interaction
 
 For the purposes of illustrating how interactions work, I chose a super simple task. Let's say you want to add `.yarn/cache` to `.gitignore`. Here is how to ask DuetGPT to help you with that:
 
 ```
-     _            _              _   
-    | |          | |            | |  
-  __| |_   _  ___| |_ __ _ _ __ | |_ 
+     _            _              _
+    | |          | |            | |
+  __| |_   _  ___| |_ __ _ _ __ | |_
  / _` | | | |/ _ \ __/ _` | '_ \| __|
-| (_| | |_| |  __/ || (_| | |_) | |_ 
+| (_| | |_| |  __/ || (_| | |_) | |_
  \__,_|\__,_|\___|\__\__, | .__/ \__|
-                      __/ | |        
-                     |___/|_|        
+                      __/ | |
+                     |___/|_|
 
 ┌  DuetGPT
 │
@@ -157,6 +154,7 @@ For the purposes of illustrating how interactions work, I chose a super simple t
 └
 
 ```
+
 ## Known issues
 
 - When proposing changes to large files, the AI may return incomplete results. The gpt-4 context window is limited, DuetGPT works best with small files - one function per file is ideal.
@@ -165,9 +163,7 @@ For the purposes of illustrating how interactions work, I chose a super simple t
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
-## Contact
-
-If you have any questions, please feel free to reach out to me!
+## Author
 
 - [kristofer@fmckl.se](mailto:kristofer@fmckl.se)
 - Twitter: [@kristoferlund](https://twitter.com/kristoferlund)

@@ -1,7 +1,7 @@
-import markdownToCli from "cli-markdown";
-import boxen from "boxen";
-import pc from "picocolors";
 import { NotifyOptions } from "./types/notify-options.type";
+import boxen from "boxen";
+import markdownToCli from "cli-markdown";
+import pc from "picocolors";
 
 /**
  * Notify the user of something. This will print a message to the console.
