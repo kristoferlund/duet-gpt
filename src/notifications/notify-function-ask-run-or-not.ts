@@ -1,17 +1,16 @@
 import * as p from "@clack/prompts";
-import { notifyWithCodeBlock } from "./notify-with-code-block";
+
+import { AiFunction } from "../functions";
+import { ChatCompletionRequestMessageFunctionCall } from "openai";
 
 /**
  * Ask the user if they want to run a command or not.
  */
-export async function notifyCommandAskRunOrNot(
-  questionOrExplanation: string,
-  command: string
+export async function notifyFunctionAskRunOrNot(
+  func: AiFunction,
+  functionCall: ChatCompletionRequestMessageFunctionCall
 ) {
-  notifyWithCodeBlock(questionOrExplanation, command, {
-    title: "🤖",
-    markdown: true,
-  });
+  await func.notify(functionCall);
 
   const choice = await p.select({
     message: "What would you like to do?",
