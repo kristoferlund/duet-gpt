@@ -18,8 +18,7 @@
     "gpt-4",
     "llm",
     "openai",
-    "duet-gpt",
-    "langchain"
+    "duet-gpt"
   ],
   "license": "MIT",
   "type": "module",
