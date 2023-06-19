@@ -39,7 +39,12 @@ export class ReplaceAiFunction extends AiFunction {
   }
 
   async notify(functionCall: ChatCompletionRequestMessageFunctionCall) {
-    const args: ReplaceArgs = JSON.parse(functionCall.arguments || "");
+    let args: ReplaceArgs;
+    try {
+      args = JSON.parse(functionCall.arguments || "");
+    } catch (e) {
+      throw new Error("Couldn't parse function arguments");
+    }
 
     const fileName = args?.filePath;
     if (!fileName) {
