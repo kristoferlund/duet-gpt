@@ -25,7 +25,12 @@ export class BashAiFunction extends AiFunction {
   };
 
   async execute(functionCall: ChatCompletionRequestMessageFunctionCall) {
-    const args: BashArgs = JSON.parse(functionCall.arguments || "");
+    let args: BashArgs;
+    try {
+      args = JSON.parse(functionCall.arguments || "");
+    } catch (e) {
+      throw new Error("Couldn't parse function arguments");
+    }
 
     // Write bash commands to a file
     fs.writeFileSync("_cmd.sh", `${args.cmd}`);
