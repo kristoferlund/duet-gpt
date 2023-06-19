@@ -1,5 +1,8 @@
+import * as fs from "fs";
+
 import {
   ChatCompletionRequestMessageFunctionCall,
+  ChatCompletionResponseMessage,
   Configuration,
   CreateChatCompletionResponse,
   OpenAIApi,
@@ -12,19 +15,13 @@ import { get_encoding } from "@dqbd/tiktoken";
 const MODEL = "gpt-4-0613";
 const MAX_REQUEST_TOKENS = 8000;
 
-// Role types for the Messages
-type Message = {
-  role: "user" | "system" | "assistant";
-  content: string;
-};
-
 /**
  * DuetGpt class handles all interactions with OpenAI's Chat models
  */
 export class DuetGpt {
   private config: Configuration;
   private openai: OpenAIApi;
-  private messages: Message[] = [];
+  private messages: ChatCompletionResponseMessage[] = [];
   private functions: AiFunction[] = [];
 
   /**
@@ -71,22 +68,38 @@ export class DuetGpt {
   }
 
   /**
+   *  Calculates the token length of a message. Messages can contain both content and function_call properties.
+   */
+  private calculateTokenLength(message: ChatCompletionResponseMessage) {
+    const encoding = get_encoding("cl100k_base");
+    let tokenLength = 0;
+
+    if (message.content) {
+      tokenLength += encoding.encode(message.content).length;
+    }
+
+    if (message.function_call) {
+      tokenLength += encoding.encode(
+        JSON.stringify(message.function_call)
+      ).length;
+    }
+
+    return tokenLength;
+  }
+
+  /**
    * This function ensures that the total token length of all messages does not exceed the maximum limit set by OpenAI.
    * If the total token length exceeds the limit, it removes the second oldest messages until the total is within the
    * limit. The oldest message is always kept since it is the system message.
    */
   private capMessageList() {
-    const encoding = get_encoding("cl100k_base");
-
     let totalTokenLength = this.messages.reduce((acc, m) => {
-      const tokenLength = encoding.encode(m.content).length;
-      return acc + tokenLength;
+      return acc + this.calculateTokenLength(m);
     }, 0);
 
-    //
+    // Remove the second oldest message until the total token length is within the limit
     while (totalTokenLength > MAX_REQUEST_TOKENS) {
-      const tokenLength = encoding.encode(this.messages[1].content).length;
-      totalTokenLength -= tokenLength;
+      totalTokenLength -= this.calculateTokenLength(this.messages[1]);
       this.messages.splice(1, 1);
     }
   }
@@ -108,6 +121,12 @@ export class DuetGpt {
       functions: this.functions.map((f) => f.definition),
       temperature: 0,
     });
+
+    // Add the response from OpenAI to the list of messages
+    if (chatCompletion.data.choices[0].message) {
+      this.messages.push(chatCompletion.data.choices[0].message);
+    }
+
     return chatCompletion.data;
   }
 }
