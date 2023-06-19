@@ -33,7 +33,17 @@ import { notifyFunctionAskRunOrNot } from "./notifications/notify-function-ask-r
     const functionCall = choice.message?.function_call;
     if (functionCall && functionCall.name) {
       const func = duetGpt.getFunction(functionCall.name);
-      const choice = await notifyFunctionAskRunOrNot(func, functionCall);
+
+      let choice;
+      try {
+        choice = await notifyFunctionAskRunOrNot(func, functionCall);
+      } catch (e) {
+        // If there is an error, notify user clear the chatRequest to allow user to enter new input
+        const errorMessage = getErrorMessage(e);
+        notify(errorMessage, { markdown: false, title: "🛑" });
+        chatRequest = "";
+      }
+
       // If user confirms to run the function, execute it and handle the result or error
       if (choice === "run") {
         const s = p.spinner();
@@ -48,6 +58,9 @@ import { notifyFunctionAskRunOrNot } from "./notifications/notify-function-ask-r
           if (commandOutput) {
             notify(commandOutput, { markdown: false, title: "💻" });
             chatRequest = commandOutput;
+          } else {
+            // If the function does not produce output, just let the AI know that the command was executed
+            chatRequest = "Function executed successfully";
           }
         } catch (e) {
           s.stop("Execution failed");
