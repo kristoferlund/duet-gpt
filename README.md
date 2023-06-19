@@ -16,11 +16,9 @@ DuetGPT builds on OpenAI's GPT-4 language model and uses its conversational capa
 
 ### ⚠️ DuetGPT has no guardrails! Make sure you understand the commands given by the AI before executing them. ⚠️
 
-<p align="center">
-   <img alt="Intro video" src="https://github.com/kristoferlund/duet-gpt/blob/main/media/intro-video.gif?raw=true" >
-<p>
+Here is a 30 second demo, use DuetGPT to build a Node.js app that draws a mandelbrot fractal using ASCII characters to the console:
 
-**👆 Example: Creating a node.js app that draws a sine wave using DuetGPT**
+https://github.com/kristoferlund/duet-gpt/assets/9698363/147bdf9d-28df-4421-9297-05abfeb53142
 
 ## Setup
 
