@@ -6,11 +6,17 @@ DuetGPT is an experimental AI powered CLI tool and semi-autonomous agent that he
 
 DuetGPT also does really well as a general bash helper.
 
+Works with OpenAI models:
+
+- gpt-3.5-turbo-0613 (does not produce any great code though)
+- gpt-4-0613
+
 Example tasks:
 
-- "Refactor index.js: add inline comments, improve variable naming."
-- "Write a bash script that lists all cars in the database."
-- "Find all files in current directory and subdirectories that contain the word "DuetGPT"
+- Refactor index.js: add inline comments, improve variable naming.
+- Write a bash script that lists all cars in the database.
+- Find all files in current directory and subdirectories that contain the word "DuetGPT"
+- Write a PR description based on the commit messages in the PR.
 
 DuetGPT builds on OpenAI's GPT-4 language model and uses its conversational capabilities to engage in a two-way conversation with the developer. It uses the newly released feature of the OpenAI API that allows the AI to make [function calls](https://openai.com/blog/function-calling-and-other-api-updates).
 
