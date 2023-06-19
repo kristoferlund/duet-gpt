@@ -1,7 +1,11 @@
-import { NotifyOptions } from "./types/notify-options.type";
 import boxen from "boxen";
 import markdownToCli from "cli-markdown";
 import pc from "picocolors";
+
+type NotifyOptions = {
+  title?: string;
+  markdown?: boolean;
+};
 
 /**
  * Notify the user of something. This will print a message to the console.
