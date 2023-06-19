@@ -1,6 +1,6 @@
 {
   "name": "duet-gpt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Experimental AI developer assistant CLI. Developers gives the AI tasks, AI responds with commands that the CLI performs.",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   "type": "module",
   "files": [
     "dist",
-    "boot.prompt"
+    "system.prompt"
   ],
   "bin": {
     "duet-gpt": "./dist/index.mjs"
