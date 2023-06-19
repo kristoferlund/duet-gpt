@@ -7,31 +7,32 @@ import {
 } from "openai";
 
 import { AiFunction } from "./functions";
+import { Config } from "./config";
 import { get_encoding } from "@dqbd/tiktoken";
-
-// Change this constant for the desired model
-const MODEL = "gpt-4-0613";
-const MAX_REQUEST_TOKENS = 8000;
 
 /**
  * DuetGpt class handles all interactions with OpenAI's Chat models
  */
 export class DuetGpt {
-  private config: Configuration;
-  private openai: OpenAIApi;
+  private config: Config;
+  private openAi: OpenAIApi;
   private messages: ChatCompletionResponseMessage[] = [];
   private functions: AiFunction[] = [];
 
   /**
    * Constructor for the DuetGpt class
    */
-  constructor(openAIApiKey: string, systemMessage: string) {
+  constructor(config: Config, systemMessage: string) {
+    // Save config
+    this.config = config;
+
     // Set up OpenAI configuration
-    this.config = new Configuration({
-      apiKey: openAIApiKey,
+    const openAiConfiguration = new Configuration({
+      apiKey: config.OPEN_AI_KEY,
     });
+
     // Initialize OpenAI client
-    this.openai = new OpenAIApi(this.config);
+    this.openAi = new OpenAIApi(openAiConfiguration);
     this.messages.push({ role: "system", content: systemMessage });
   }
 
@@ -96,7 +97,7 @@ export class DuetGpt {
     }, 0);
 
     // Remove the second oldest message until the total token length is within the limit
-    while (totalTokenLength > MAX_REQUEST_TOKENS) {
+    while (totalTokenLength > this.config.OPEN_AI_MODEL.maxTokens) {
       totalTokenLength -= this.calculateTokenLength(this.messages[1]);
       this.messages.splice(1, 1);
     }
@@ -113,8 +114,8 @@ export class DuetGpt {
     // allowed by OpenAI
     this.capMessageList();
 
-    const chatCompletion = await this.openai.createChatCompletion({
-      model: MODEL,
+    const chatCompletion = await this.openAi.createChatCompletion({
+      model: this.config.OPEN_AI_MODEL.id,
       messages: this.messages,
       functions: this.functions.map((f) => f.definition),
       temperature: 0,

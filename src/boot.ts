@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as p from "@clack/prompts";
 
+import { configOrStart, configPrompts, loadConfig } from "./config";
 import path, { dirname } from "path";
 
 import { BashAiFunction } from "./functions/bash";
@@ -8,7 +9,6 @@ import { CreateChatCompletionResponse } from "openai";
 import { DuetGpt } from "./duetgpt";
 import { ReplaceAiFunction } from "./functions/replace";
 import { fileURLToPath } from "url";
-import { getApiKey } from "./utils/api";
 import { getErrorMessage } from "./utils/error";
 import packageJson from "../package.json";
 import pc from "picocolors";
@@ -55,8 +55,8 @@ export async function boot() {
   // Print welcome messages
   welcomeMessages();
 
-  // Get the OpenAI API key from config or prompt the user for it
-  const openAIApiKey = await getApiKey();
+  // Set initial config values and allow user to change them at each boot.
+  const config = await configOrStart();
 
   // Show a spinner while booting
   const s = p.spinner();
@@ -67,7 +67,7 @@ export async function boot() {
     const systemPromptText = fs.readFileSync(systemPromptPath, "utf8");
 
     // Create a new DuetGPT instance
-    const duetGpt = new DuetGpt(openAIApiKey, systemPromptText);
+    const duetGpt = new DuetGpt(config, systemPromptText);
     duetGpt.addFunction(new BashAiFunction());
     duetGpt.addFunction(new ReplaceAiFunction());
 
